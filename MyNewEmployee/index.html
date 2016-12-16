@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="">
+    <style>
+        a {
+            text-decoration: underline;
+        }
+
+        .modal-body {
+            padding: 10px 2px 0 2px;
+        }
+
+        .modal-title {
+            color: #0E617D;
+            font-weight: bold;
+        }
+
+        #tableheader {
+            background-color: #F1F6FA;
+        }
+
+        .modal-header {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        div.modal-content {
+            border-radius: 4px;
+            box-shadow: 0;
+        }
+
+        option[value="0"] {
+            opacity: 0.5;
+        }
+
+        .form-horizontal {
+            padding: 10px;
+        }
+
+        .modal-content {
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="table-responsive">
+
+        <div class="modal fade" tabindex="-1" id="myModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title page-title">New Employee</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" id="addEmployeeForm">
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">First Name:</label>
+                                <div class="col-md-5">
+                                    <input id="firstNameId" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Last Name:</label>
+                                <div class="col-md-5">
+                                    <input id="lastNameId" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Initials:</label>
+                                <div class="col-md-5">
+                                    <input id="initialsId" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="selectbasic">Office:</label>
+                                <div class="col-md-5">
+                                    <select id="officeId" name="selectbasic" class="form-control">
+                                        <option value="" selected="selected">Select Office</option>
+                                        <option value="New York">New York</option>
+                                        <option value="London">London</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="deleteBtn">Delete Employee</button>
+                            <button type="button" class="btn btn-default closemodal" data-dismiss="modal">Cancel</button>
+
+                            <!-- hacer el metodo edit -->
+                            <button type="button" id="saveUpdate" class="btn btn-default closemodal">Save Employee</button>
+                        </div>
+                    </div>
+
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>  
+
+
+    <form class="form-horizontal">
+        <div class="modal-body">
+            <div id="tableheader" class="modal-header">
+                <button type="button" id="newEmployee" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal">New Employee</button>
+                <h4 class="modal-title">Employees</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered" id="target">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Initials</th>
+                            <th>Office</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody> <!-- Seleccionar el edit por el row id ...-->
+                </table>
+            </div>
+        </div>
+    </form>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
