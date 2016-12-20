@@ -125,7 +125,7 @@
             var jsonObjEmployee = JSON.stringify(objEmployee);
             $.ajax({
                 type: "PUT",
-                url: "api/Employee/" + selectedEmployeeId,
+                url: "api/Employee/5", /*+ selectedEmployeeId,*/
                 contentType: "application/json",
                 success: function (selectedEmployeeId, jsonObjEmployee) {//pasa el id pero no el objeto
                     editRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);

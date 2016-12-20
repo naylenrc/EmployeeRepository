@@ -61,7 +61,7 @@ namespace MyNewEmployee.Controller
         }
 
         // PUT: api/Employee/5
-        public void Put(int id, Employee editEmployee)
+        public void Put(int id, Employee editEmployee) //el objeto llega null
         {
             var myIndex = employees.FindIndex(x => x.employeeId == id);
             employees[myIndex].firstName = editEmployee.firstName;
