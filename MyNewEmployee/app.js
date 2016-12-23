@@ -13,7 +13,7 @@
                 var init = jsonlist.employees[i].initials;
                 var office = jsonlist.employees[i].officeId;
 
-                newRow(firstname, lName, init, jsonlist.offices[office - 1].name);
+                newRow(firstname, lName, init, office);
             }
         }
     });
@@ -102,16 +102,20 @@
   }); */
 
     document.getElementById("saveUpdate").addEventListener("click", function () {
+        
+        var saveUpdate =  document.getElementById('saveUpdate').innerHTML
+
         var firstNameEdited = document.getElementById('firstNameId').value
         var lastNameEdited = document.getElementById('lastNameId').value
         var initialsEdited = document.getElementById('initialsId').value
         var offEdit = document.getElementById('officeId').value
+        var selectedEmployeeId = saveUpdate == "Add Employee"? 0: selectedRowId.replace("row", "") * 1;
 
-        var objEmployee = { employeeId: myId, firstName: firstNameEdited, lastName: lastNameEdited, initials: initialsEdited, officeId: offEdit }
+        var objEmployee = { employeeId: selectedEmployeeId, firstName: firstNameEdited, lastName: lastNameEdited, initials: initialsEdited, officeId: offEdit }
        
         
 
-        if (document.getElementById('saveUpdate').innerHTML == "Add Employee") {
+        if (saveUpdate == "Add Employee") {
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(objEmployee),
@@ -120,14 +124,16 @@
             });
             newRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
 
-        } else if (document.getElementById('saveUpdate').innerHTML == "Save Employee") {
-            var selectedEmployeeId = selectedRowId.replace("row", "");
-            var jsonObjEmployee = JSON.stringify(objEmployee);
+        } else if (saveUpdate == "Save Employee") {
+            
+           // var jsonObjEmployee = JSON.stringify(objEmployee);
+
             $.ajax({
                 type: "PUT",
                 url: "api/Employee/5", /*+ selectedEmployeeId,*/
                 contentType: "application/json",
-                success: function (selectedEmployeeId, jsonObjEmployee) {//pasa el id pero no el objeto
+                data: JSON.stringify(objEmployee),
+                success: function (data) {//pasa el id pero no el objeto
                     editRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
                 }
             });            

@@ -12,8 +12,8 @@ namespace MyNewEmployee.Controller
     {
         public List<Employee> employees = new List<Employee>()
         {
-            new Employee () {employeeId = 0, firstName = "Naylen", lastName = "Ramirez", initials = "NR", officeId = 1},
-            new Employee () {employeeId = 1, firstName = "Jose", lastName = "Mendez", initials = "JM", officeId = 2}
+            new Employee () {employeeId = 0, firstName = "Naylen", lastName = "Ramirez", initials = "NR", officeId = "New York"},
+            new Employee () {employeeId = 1, firstName = "Jose", lastName = "Mendez", initials = "JM", officeId = "London"}
 
         };
 
@@ -61,21 +61,22 @@ namespace MyNewEmployee.Controller
         }
 
         // PUT: api/Employee/5
-        public void Put(int id, Employee editEmployee) //el objeto llega null
+        public void Put(Employee editEmployee) // esta tomando id y office 0 siempre ****
         {
-            var myIndex = employees.FindIndex(x => x.employeeId == id);
+            /*
+            var myIndex = employees.FindIndex(x => x.employeeId == editEmployee.employeeId);
             employees[myIndex].firstName = editEmployee.firstName;
             employees[myIndex].lastName = editEmployee.lastName;
             employees[myIndex].initials = editEmployee.initials;
             employees[myIndex].officeId = editEmployee.officeId;
-
-            /*
-            Employee editedEmployee = employees.Find(x => x.employeeId == id);
+             */
+            
+            Employee editedEmployee = employees.Find(x => x.employeeId == editEmployee.employeeId);
             editedEmployee.firstName = editEmployee.firstName;
             editedEmployee.lastName = editEmployee.lastName;
             editedEmployee.initials = editEmployee.initials;
             editedEmployee.officeId = editEmployee.officeId;
-            */
+           
         }
 
         // DELETE: api/Employee/5

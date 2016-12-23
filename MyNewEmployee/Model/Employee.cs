@@ -11,7 +11,7 @@ namespace MyNewEmployee.Model
         public string firstName { set; get; }
         public string lastName { set; get; }
         public string initials { set; get; }
-        public int officeId { set; get; }
+        public string officeId { set; get; }
 
     }
 }
