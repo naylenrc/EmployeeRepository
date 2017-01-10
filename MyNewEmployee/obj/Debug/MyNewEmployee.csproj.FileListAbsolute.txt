@@ -39,3 +39,7 @@ C:\Users\nayle\documents\visual studio 2015\Projects\MyNewEmployeeSolution\MyNew
 C:\Users\nayle\documents\visual studio 2015\Projects\MyNewEmployeeSolution\MyNewEmployee\obj\Debug\MyNewEmployee.csprojResolveAssemblyReference.cache
 C:\Users\nayle\documents\visual studio 2015\Projects\MyNewEmployeeSolution\MyNewEmployee\obj\Debug\MyNewEmployee.dll
 C:\Users\nayle\documents\visual studio 2015\Projects\MyNewEmployeeSolution\MyNewEmployee\obj\Debug\MyNewEmployee.pdb
+C:\Users\nayle\Documents\Visual Studio 2015\Projects\MyNewEmployeeSolution\MyNewEmployee\bin\EntityFramework.dll
+C:\Users\nayle\Documents\Visual Studio 2015\Projects\MyNewEmployeeSolution\MyNewEmployee\bin\EntityFramework.SqlServer.dll
+C:\Users\nayle\Documents\Visual Studio 2015\Projects\MyNewEmployeeSolution\MyNewEmployee\bin\EntityFramework.xml
+C:\Users\nayle\Documents\Visual Studio 2015\Projects\MyNewEmployeeSolution\MyNewEmployee\bin\EntityFramework.SqlServer.xml

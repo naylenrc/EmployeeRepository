@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace MyNewEmployee.Model
+﻿namespace MyNewEmployee.Model
 {
-    public class Office
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    [Table("Office")]
+    public partial class Office
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+
+        [StringLength(50)]
+        public string Name { get; set; }
     }
 }

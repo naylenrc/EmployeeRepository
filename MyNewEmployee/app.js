@@ -6,14 +6,24 @@
     $.ajax({
         url: "/api/employee", success: function (jsonlist) {
 
-            for (var i = 0; i < jsonlist.employees.length; i++) {
+            for (var i = 0; i < jsonlist.length; i++) {
+
+                var firstname = jsonlist[i].FirstName;
+                var lName = jsonlist[i].LastName;
+                var init = jsonlist[i].Initials;
+                var office = jsonlist[i].OfficeId;
+
+                newRow(firstname, lName, init, office);
+            
+
+           /* for (var i = 0; i < jsonlist.employees.length; i++) {
 
                 var firstname = jsonlist.employees[i].firstName;
                 var lName = jsonlist.employees[i].lastName;
                 var init = jsonlist.employees[i].initials;
                 var office = jsonlist.employees[i].officeId;
 
-                newRow(firstname, lName, init, office);
+                newRow(firstname, lName, init, office);*/
             }
         }
     });

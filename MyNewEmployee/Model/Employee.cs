@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace MyNewEmployee.Model
+﻿namespace MyNewEmployee.Model
 {
-    public class Employee
-    {
-        public int employeeId { get; set; }
-        public string firstName { set; get; }
-        public string lastName { set; get; }
-        public string initials { set; get; }
-        public string officeId { set; get; }
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    [Table("Employee")]
+    public partial class Employee
+    {
+        public int Id { get; set; }
+
+        [StringLength(50)]
+        public string FirstName { get; set; }
+
+        [StringLength(50)]
+        public string LastName { get; set; }
+
+        [StringLength(5)]
+        public string Initials { get; set; }
+
+        public string OfficeId { get; set; }
     }
 }

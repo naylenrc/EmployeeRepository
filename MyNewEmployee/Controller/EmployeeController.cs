@@ -10,59 +10,62 @@ namespace MyNewEmployee.Controller
 {
     public class EmployeeController : ApiController
     {
-        public List<Employee> employees = new List<Employee>()
-        {
-            new Employee () {employeeId = 0, firstName = "Naylen", lastName = "Ramirez", initials = "NR", officeId = "New York"},
-            new Employee () {employeeId = 1, firstName = "Jose", lastName = "Mendez", initials = "JM", officeId = "London"}
+        //public List<Employee> employees = new List<Employee>()
+        //{
+        //    new Employee () {employeeId = 0, firstName = "Naylen", lastName = "Ramirez", initials = "NR", officeId = "New York"},
+        //    new Employee () {employeeId = 1, firstName = "Jose", lastName = "Mendez", initials = "JM", officeId = "London"}
 
-        };
+        //};
+      //  public Model1 ctx = new Model1();       
 
-        public List<Office> offices = new List<Office>()
+            public EmployeeModel ctx = new EmployeeModel();
+
+
+      /*  public List<Office> offices = new List<Office>()
         {
             new Office () {id = 1, name = "New York"},
             new Office () {id = 2, name = "London"}
         };
-
+*/
 
         // GET: api/Employee
-        public EmployeeOffice Get()
+        public List<Employee> Get()
         {
-            var ret = new EmployeeOffice();
-            ret.employees = employees;
-            ret.offices = offices;
-
-            return ret;
+            var getEmployees = ctx.Employees.ToList();
+            return getEmployees;          
         }
+
+
 
         // GET: api/Employee/5
-        public Employee Get(int id)
-        {
-            Employee editEmployee = employees.Find(x => x.employeeId == id);
-
-            return editEmployee;
-        }
+          public Employee Get(int id)
+          {
+              Employee getEmployee = ctx.Employees.Find(id);
+              return getEmployee;
+          }
 
         // POST: api/Employee
         public void Post(Employee employee)
         {
-            try
+            using (var db = new EmployeeModel())
             {
-                Employee newEmployee = new Employee();
-                newEmployee.employeeId = employee.employeeId;
-                newEmployee.firstName = employee.firstName;
-                newEmployee.lastName = employee.lastName;
-                newEmployee.initials = employee.initials;
-                newEmployee.officeId = employee.officeId;
-
-                employees.Add(newEmployee);  //cuando este metodo corre, agrega un elemento a la lista, pero despues cuando hago otra accion sale que la lista tiene los elementos originales (solo dos)
+                db.Employees.Add(employee);
+                db.SaveChanges();
             }
-            
-            catch (Exception) { }
         }
 
         // PUT: api/Employee/5
-        public void Put(Employee editEmployee) // esta tomando id y office 0 siempre ****
+        public void Put(Employee editEmployee)  // siempre me trae id 0 ** arreglar el js **
         {
+
+            var emp = ctx.Employees.Find(editEmployee.Id);
+            emp.FirstName = editEmployee.FirstName;
+            emp.LastName = editEmployee.LastName;
+            emp.Initials = editEmployee.Initials;
+            emp.OfficeId = editEmployee.OfficeId;
+
+            ctx.SaveChanges();
+        }
             /*
             var myIndex = employees.FindIndex(x => x.employeeId == editEmployee.employeeId);
             employees[myIndex].firstName = editEmployee.firstName;
@@ -71,7 +74,7 @@ namespace MyNewEmployee.Controller
             employees[myIndex].officeId = editEmployee.officeId;
              */
             
-            Employee editedEmployee = employees.Find(x => x.employeeId == editEmployee.employeeId);
+         /*   Employee editedEmployee = employees.Find(x => x.employeeId == editEmployee.employeeId);
             editedEmployee.firstName = editEmployee.firstName;
             editedEmployee.lastName = editEmployee.lastName;
             editedEmployee.initials = editEmployee.initials;
@@ -80,13 +83,13 @@ namespace MyNewEmployee.Controller
         }
 
         // DELETE: api/Employee/5
-        public void Delete(int id)
+     /*   public void Delete(int id)
         {
             Employee deleteEmployee = employees.Find(x=>x.employeeId == id);
             employees.Remove(deleteEmployee);
 
             // employees.Remove(employees.Single(s => s.employeeId == id));
-        }
+        }*/
     }
 
    public class EmployeeOffice
