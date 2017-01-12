@@ -110,7 +110,7 @@
         var offEdit = document.getElementById('officeId').value
         var selectedEmployeeId = saveUpdate == "Add Employee" ? 0 : selectedRowId.replace("row", "") * 1;
 
-        var objEmployee = { employeeId: selectedEmployeeId, firstName: firstNameEdited, lastName: lastNameEdited, initials: initialsEdited, officeId: offEdit }
+        var objEmployee = { Id: selectedEmployeeId, FirstName: firstNameEdited, LastName: lastNameEdited, Initials: initialsEdited, OfficeId: offEdit }
 
 
 
@@ -127,14 +127,15 @@
 
             $.ajax({
                 type: "PUT",
-                url: "api/Employee/5", /*+ selectedEmployeeId,*/
-                contentType: "application/json",
+                url: "api/Employee/" + selectedEmployeeId,
                 data: JSON.stringify(objEmployee),
-                success: function (data) {//pasa el id pero no el objeto
+                contentType: "application/json"
+            });
+              //  success: function (data) {//pasa el id pero no el objeto
                     editRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
                 }
-            });
-        }
+            //});
+        
 
         $("#myModal").modal('hide');
 
@@ -158,8 +159,7 @@
                             $(this).find('form')[0].reset();
                         });
                     }
-                });
-                   
+                });                   
     });
 
 
