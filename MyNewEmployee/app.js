@@ -1,6 +1,6 @@
 ﻿window.onload = function () {
 
-    var myId = 0;
+    var myId;
     var selectedRowId = null;
 
     $.ajax({
@@ -12,29 +12,19 @@
                 var lName = jsonlist[i].LastName;
                 var init = jsonlist[i].Initials;
                 var office = jsonlist[i].OfficeId;
+                myId = jsonlist[i].Id;
 
-                newRow(firstname, lName, init, office);
-            
+                newRow(myId,firstname, lName, init, office);
 
-           /* for (var i = 0; i < jsonlist.employees.length; i++) {
-
-                var firstname = jsonlist.employees[i].firstName;
-                var lName = jsonlist.employees[i].lastName;
-                var init = jsonlist.employees[i].initials;
-                var office = jsonlist.employees[i].officeId;
-
-                newRow(firstname, lName, init, office);*/
             }
         }
     });
 
 
-
-
-    function newRow(firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
+    function newRow(getId, firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
 
         var addRow = document.createElement('tr');
-        addRow.id = "row" + myId;
+        addRow.id = "row" + getId;
 
         addRow.appendChild(createCell(firstNameColumn));
         addRow.appendChild(createCell(lastNameColumn));
@@ -76,8 +66,7 @@
         editLink.id = "edit" + myId;
         editLink.className = "editClass";
         editLink.addEventListener('click', clickEdit, false);
-        myId++;
-
+        
         return editLink;
     }
 
@@ -112,18 +101,18 @@
   }); */
 
     document.getElementById("saveUpdate").addEventListener("click", function () {
-        
-        var saveUpdate =  document.getElementById('saveUpdate').innerHTML
+
+        var saveUpdate = document.getElementById('saveUpdate').innerHTML
 
         var firstNameEdited = document.getElementById('firstNameId').value
         var lastNameEdited = document.getElementById('lastNameId').value
         var initialsEdited = document.getElementById('initialsId').value
         var offEdit = document.getElementById('officeId').value
-        var selectedEmployeeId = saveUpdate == "Add Employee"? 0: selectedRowId.replace("row", "") * 1;
+        var selectedEmployeeId = saveUpdate == "Add Employee" ? 0 : selectedRowId.replace("row", "") * 1;
 
         var objEmployee = { employeeId: selectedEmployeeId, firstName: firstNameEdited, lastName: lastNameEdited, initials: initialsEdited, officeId: offEdit }
-       
-        
+
+
 
         if (saveUpdate == "Add Employee") {
             $.ajax({
@@ -132,11 +121,9 @@
                 url: "api/Employee",
                 contentType: "application/json"
             });
-            newRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
+            newRow(selectedEmployeeId, firstNameEdited, lastNameEdited, initialsEdited, offEdit);
 
         } else if (saveUpdate == "Save Employee") {
-            
-           // var jsonObjEmployee = JSON.stringify(objEmployee);
 
             $.ajax({
                 type: "PUT",
@@ -146,7 +133,7 @@
                 success: function (data) {//pasa el id pero no el objeto
                     editRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
                 }
-            });            
+            });
         }
 
         $("#myModal").modal('hide');
@@ -156,30 +143,26 @@
         });
     });
 
-    /*
-    document.getElementById("deleteBtn").addEventListener("click", function () {
-        $("#" + selectedRowId).remove();
-    });
-    */
 
     document.getElementById("deleteBtn").addEventListener("click", function () {
+        var deletedEmployee = selectedRowId.replace("row", "") * 1;
+                $.ajax({
+                    type: "DELETE",
+                    url: "api/Employee/" + deletedEmployee,
+                    success: function (deletedEmployee) {
+                        $("#" + selectedRowId).remove();
 
-        var deletedEmployeeId = selectedRowId.replace("row", "");
-        
-        $.ajax({
-            type: "DELETE",            
-            url: "api/Employee/" + deletedEmployeeId,
-            success: function (deletedEmployeeId) {
-                $("#" + selectedRowId).remove();
+                        +$("#myModal").modal('hide');
 
-                +$("#myModal").modal('hide');
-
-                $('.modal').on('hidden.bs.modal', function () {
-                    $(this).find('form')[0].reset();
+                        $('.modal').on('hidden.bs.modal', function () {
+                            $(this).find('form')[0].reset();
+                        });
+                    }
                 });
-            }
-        });       
+                   
     });
+
+
 
     document.getElementById("newEmployee").addEventListener("click", function () {
         $(".page-title").html('New Employee');

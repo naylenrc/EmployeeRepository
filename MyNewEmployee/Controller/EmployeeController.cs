@@ -37,7 +37,7 @@ namespace MyNewEmployee.Controller
 
 
 
-        // GET: api/Employee/5
+        // GET: api/Employee/id
           public Employee Get(int id)
           {
               Employee getEmployee = ctx.Employees.Find(id);
@@ -66,30 +66,15 @@ namespace MyNewEmployee.Controller
 
             ctx.SaveChanges();
         }
-            /*
-            var myIndex = employees.FindIndex(x => x.employeeId == editEmployee.employeeId);
-            employees[myIndex].firstName = editEmployee.firstName;
-            employees[myIndex].lastName = editEmployee.lastName;
-            employees[myIndex].initials = editEmployee.initials;
-            employees[myIndex].officeId = editEmployee.officeId;
-             */
-            
-         /*   Employee editedEmployee = employees.Find(x => x.employeeId == editEmployee.employeeId);
-            editedEmployee.firstName = editEmployee.firstName;
-            editedEmployee.lastName = editEmployee.lastName;
-            editedEmployee.initials = editEmployee.initials;
-            editedEmployee.officeId = editEmployee.officeId;
-           
-        }
+        
 
         // DELETE: api/Employee/5
-     /*   public void Delete(int id)
+        public void Delete(int id)
         {
-            Employee deleteEmployee = employees.Find(x=>x.employeeId == id);
-            employees.Remove(deleteEmployee);
-
-            // employees.Remove(employees.Single(s => s.employeeId == id));
-        }*/
+            Employee deleteEmployee = ctx.Employees.Find(id);
+            ctx.Employees.Remove(deleteEmployee);
+            ctx.SaveChanges();
+        }
     }
 
    public class EmployeeOffice
