@@ -14,18 +14,19 @@
                 var office = jsonlist[i].OfficeId;
                 myId = jsonlist[i].Id;
 
-                newRow(myId,firstname, lName, init, office);
+                newRow(myId, firstname, lName, init, office);
 
             }
         }
     });
 
 
-    function newRow(getId, firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
+    function newRow(empId, firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
 
         var addRow = document.createElement('tr');
-        addRow.id = "row" + getId;
+      //  addRow.id = "row" + empId;
 
+        addRow.appendChild(createCell(empId, true));
         addRow.appendChild(createCell(firstNameColumn));
         addRow.appendChild(createCell(lastNameColumn));
         addRow.appendChild(createCell(initialColumn));
@@ -37,24 +38,26 @@
     }
 
 
-    /* $.ajax({ 
-         url: "/api/employee/id", type: "PUT", success: function () {*/
     function editRow(firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
         var replaceRow = $("#" + selectedRowId);
+
         replaceRow.children("td:nth-child(1)")[0].innerText = firstNameColumn;
         replaceRow.children("td:nth-child(2)")[0].innerText = lastNameColumn;
         replaceRow.children("td:nth-child(3)")[0].innerText = initialColumn;
         replaceRow.children("td:nth-child(4)")[0].innerText = officeColumn;
     }
-    /* }
- });*/
-    function createCell(text) {
+
+
+    function createCell(text, isId) {
         var newColumn = document.createElement('td');
         if (text) {
             if (typeof text == "object") {
                 newColumn.appendChild(text)
             } else
                 newColumn.innerText = text;
+        }
+        if (isId) {
+            newColumn.className = "this-is-id";
         }
         return newColumn;
     }
@@ -66,53 +69,52 @@
         editLink.id = "edit" + myId;
         editLink.className = "editClass";
         editLink.addEventListener('click', clickEdit, false);
-        
+
         return editLink;
     }
 
     function clickEdit() {
-        var clickedBtnID = $(this).attr('id');
-        selectedRowId = clickedBtnID.replace("edit", "row");
+        var clickedBtnID = $(this).parent().parent().find('.this-is-id');
+        selectedRowId = clickedBtnID[0].innerText *1; //.replace("edit", "row");        
 
         $("#myModal").modal('show');
         $(".page-title").html('Edit Employee');
         $("#deleteBtn").css("display", "block");
         $("#saveUpdate").html('Save Employee');
-
+        
         editEmployee(selectedRowId);
     }
 
-    /*  $.ajax({
-          url: "/api/employee/id", type: "GET", success: function () {*/
+    
     function editEmployee(rowid) {
+        var id = rowid;
+        $.ajax({
+            type: "GET",
+            url: "/api/Employee/" + id,
+            success: function (jsonlist) {
+                
+                document.getElementById('employeeId').value = jsonlist.Id;
+                document.getElementById('firstNameId').value = jsonlist.FirstName;
+                document.getElementById('lastNameId').value = jsonlist.LastName;
+                document.getElementById('initialsId').value = jsonlist.Initials;
+                document.getElementById('officeId').value = jsonlist.OfficeId;                   
 
-        var clickedRow = $("#" + rowid); //tr
-        var editFirstName = clickedRow.children("td:nth-child(1)")[0].innerText;
-        var editLastName = clickedRow.children("td:nth-child(2)")[0].innerText;
-        var editInitial = clickedRow.children("td:nth-child(3)")[0].innerText;
-        var editOffice = clickedRow.children("td:nth-child(4)")[0].innerText;
-
-        document.getElementById('firstNameId').value = editFirstName;
-        document.getElementById('lastNameId').value = editLastName;
-        document.getElementById('initialsId').value = editInitial;
-        document.getElementById('officeId').value = editOffice;
+                }            
+        });
     }
-    /*  }
-  }); */
+
 
     document.getElementById("saveUpdate").addEventListener("click", function () {
 
         var saveUpdate = document.getElementById('saveUpdate').innerHTML
-
+        var selectedEmployeeId = document.getElementById('employeeId').value * 1
         var firstNameEdited = document.getElementById('firstNameId').value
         var lastNameEdited = document.getElementById('lastNameId').value
         var initialsEdited = document.getElementById('initialsId').value
         var offEdit = document.getElementById('officeId').value
-        var selectedEmployeeId = saveUpdate == "Add Employee" ? 0 : selectedRowId.replace("row", "") * 1;
+        // var selectedEmployeeId = saveUpdate == "Add Employee" ? 0 : selectedRowId.replace("row", "") * 1;
 
         var objEmployee = { Id: selectedEmployeeId, FirstName: firstNameEdited, LastName: lastNameEdited, Initials: initialsEdited, OfficeId: offEdit }
-
-
 
         if (saveUpdate == "Add Employee") {
             $.ajax({
@@ -131,11 +133,8 @@
                 data: JSON.stringify(objEmployee),
                 contentType: "application/json"
             });
-              //  success: function (data) {//pasa el id pero no el objeto
-                    editRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
-                }
-            //});
-        
+            editRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
+        }
 
         $("#myModal").modal('hide');
 
@@ -146,22 +145,24 @@
 
 
     document.getElementById("deleteBtn").addEventListener("click", function () {
-        var deletedEmployee = selectedRowId.replace("row", "") * 1;
-                $.ajax({
-                    type: "DELETE",
-                    url: "api/Employee/" + deletedEmployee,
-                    success: function (deletedEmployee) {
-                        $("#" + selectedRowId).remove();
+        var deletedEmployee = document.getElementById('employeeId').value * 1
+               
+        $.ajax({
+            type: "DELETE",
+            url: "api/Employee/" + deletedEmployee,
+            data: deletedEmployee
+        });
 
-                        +$("#myModal").modal('hide');
+        $('#target tr td.this-is-id').filter(function () { if ($(this).html() == deletedEmployee) { return true; } }).parent().remove();
 
-                        $('.modal').on('hidden.bs.modal', function () {
-                            $(this).find('form')[0].reset();
-                        });
-                    }
-                });                   
+       $("#myModal").modal('hide');
+
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset();
+        });
+
     });
-
+       
 
 
     document.getElementById("newEmployee").addEventListener("click", function () {

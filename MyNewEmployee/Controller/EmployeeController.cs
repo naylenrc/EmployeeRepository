@@ -10,23 +10,8 @@ namespace MyNewEmployee.Controller
 {
     public class EmployeeController : ApiController
     {
-        //public List<Employee> employees = new List<Employee>()
-        //{
-        //    new Employee () {employeeId = 0, firstName = "Naylen", lastName = "Ramirez", initials = "NR", officeId = "New York"},
-        //    new Employee () {employeeId = 1, firstName = "Jose", lastName = "Mendez", initials = "JM", officeId = "London"}
-
-        //};
-      //  public Model1 ctx = new Model1();       
-
             public EmployeeModel ctx = new EmployeeModel();
 
-
-      /*  public List<Office> offices = new List<Office>()
-        {
-            new Office () {id = 1, name = "New York"},
-            new Office () {id = 2, name = "London"}
-        };
-*/
 
         // GET: api/Employee
         public List<Employee> Get()
@@ -38,7 +23,7 @@ namespace MyNewEmployee.Controller
 
 
         // GET: api/Employee/id
-          public Employee Get(int id)
+          public Employee Get(int id) //no entra aqui 
           {
               Employee getEmployee = ctx.Employees.Find(id);
               return getEmployee;
@@ -71,7 +56,7 @@ namespace MyNewEmployee.Controller
         // DELETE: api/Employee/5
         public void Delete(int id)
         {
-            Employee deleteEmployee = ctx.Employees.Find(id);
+            Employee deleteEmployee = ctx.Employees.FirstOrDefault(x => x.Id == id);
             ctx.Employees.Remove(deleteEmployee);
             ctx.SaveChanges();
         }
