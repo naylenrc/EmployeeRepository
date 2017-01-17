@@ -30,13 +30,14 @@ namespace MyNewEmployee.Controller
           }
 
         // POST: api/Employee
-        public void Post(Employee employee)
+        public Employee Post(Employee employee)
         {
             using (var db = new EmployeeModel())
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
             }
+            return employee;
         }
 
         // PUT: api/Employee/5

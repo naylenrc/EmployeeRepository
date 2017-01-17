@@ -15,16 +15,14 @@
                 myId = jsonlist[i].Id;
 
                 newRow(myId, firstname, lName, init, office);
-
             }
         }
     });
 
-
+    
     function newRow(empId, firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
 
         var addRow = document.createElement('tr');
-      //  addRow.id = "row" + empId;
 
         addRow.appendChild(createCell(empId, true));
         addRow.appendChild(createCell(firstNameColumn));
@@ -38,13 +36,14 @@
     }
 
 
-    function editRow(firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
-        var replaceRow = $("#" + selectedRowId);
+    function editRow(idColumn, firstNameColumn, lastNameColumn, initialColumn, officeColumn) {
+        var replaceRow = $('td.this-is-id').filter(function () { if ($(this).html() == idColumn) { return true; } }).parent();
 
-        replaceRow.children("td:nth-child(1)")[0].innerText = firstNameColumn;
-        replaceRow.children("td:nth-child(2)")[0].innerText = lastNameColumn;
-        replaceRow.children("td:nth-child(3)")[0].innerText = initialColumn;
-        replaceRow.children("td:nth-child(4)")[0].innerText = officeColumn;
+        replaceRow.children("td:nth-child(1)")[0].innerText = idColumn;
+        replaceRow.children("td:nth-child(2)")[0].innerText = firstNameColumn;
+        replaceRow.children("td:nth-child(3)")[0].innerText = lastNameColumn;
+        replaceRow.children("td:nth-child(4)")[0].innerText = initialColumn;
+        replaceRow.children("td:nth-child(5)")[0].innerText = officeColumn;
     }
 
 
@@ -112,7 +111,6 @@
         var lastNameEdited = document.getElementById('lastNameId').value
         var initialsEdited = document.getElementById('initialsId').value
         var offEdit = document.getElementById('officeId').value
-        // var selectedEmployeeId = saveUpdate == "Add Employee" ? 0 : selectedRowId.replace("row", "") * 1;
 
         var objEmployee = { Id: selectedEmployeeId, FirstName: firstNameEdited, LastName: lastNameEdited, Initials: initialsEdited, OfficeId: offEdit }
 
@@ -121,9 +119,17 @@
                 type: "POST",
                 data: JSON.stringify(objEmployee),
                 url: "api/Employee",
-                contentType: "application/json"
+                contentType: "application/json",
+                success: function (employee) {
+                    var newId = employee.Id;
+                    var firstname = employee.FirstName;
+                    var lastname = employee.LastName;
+                    var init = employee.Initials;
+                    var office = employee.OfficeId;
+
+                    newRow(newId, firstname, lastname, init, office);
+                }
             });
-            newRow(selectedEmployeeId, firstNameEdited, lastNameEdited, initialsEdited, offEdit);
 
         } else if (saveUpdate == "Save Employee") {
 
@@ -133,7 +139,7 @@
                 data: JSON.stringify(objEmployee),
                 contentType: "application/json"
             });
-            editRow(firstNameEdited, lastNameEdited, initialsEdited, offEdit);
+            editRow(selectedEmployeeId, firstNameEdited, lastNameEdited, initialsEdited, offEdit);
         }
 
         $("#myModal").modal('hide');
