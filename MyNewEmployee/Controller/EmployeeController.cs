@@ -23,7 +23,7 @@ namespace MyNewEmployee.Controller
 
 
         // GET: api/Employee/id
-          public Employee Get(int id) //no entra aqui 
+          public Employee Get(int id) 
           {
               Employee getEmployee = ctx.Employees.Find(id);
               return getEmployee;
@@ -41,7 +41,7 @@ namespace MyNewEmployee.Controller
         }
 
         // PUT: api/Employee/5
-        public void Put(Employee editEmployee)  // siempre me trae id 0 ** arreglar el js **
+        public void Put(Employee editEmployee)  
         {
 
             var emp = ctx.Employees.Find(editEmployee.Id);
