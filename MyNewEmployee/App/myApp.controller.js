@@ -9,6 +9,7 @@ myAppModule.controller('myController', function ($scope, employee, $http) {
     $scope.editText = function () {
         $scope.titleText = "New Employee";
         $scope.showDeleteBtn = false;
+        $scope.employeesToEdit = {};
     }
 
     $scope.edit = function (id) {
@@ -22,8 +23,9 @@ myAppModule.controller('myController', function ($scope, employee, $http) {
     $scope.deleteEmp = function (id) {
         employee.deleteEmployee(id).then(function (response) {
             console.log('deleted');
+            $scope.employees = response.data;
         })
-        location.reload();
+        
     }
 
     $scope.save = function (employee) {
@@ -42,7 +44,7 @@ myAppModule.controller('myController', function ($scope, employee, $http) {
                         });
             }
         
-        location.reload();
+       // location.reload();
         angular.element('#myModal').modal('hide');
     }
 

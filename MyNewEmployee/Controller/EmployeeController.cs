@@ -41,7 +41,7 @@ namespace MyNewEmployee.Controller
         }
 
         // PUT: api/Employee/5
-        public void Put(Employee editEmployee)  
+       /* public void Put(Employee editEmployee)  
         {
 
             var emp = ctx.Employees.Find(editEmployee.Id);
@@ -51,15 +51,29 @@ namespace MyNewEmployee.Controller
             emp.OfficeId = editEmployee.OfficeId;
 
             ctx.SaveChanges();
+        }*/
+
+        public List<Employee> Put(Employee editEmployee)
+        {
+
+            var emp = ctx.Employees.Find(editEmployee.Id);
+            emp.FirstName = editEmployee.FirstName;
+            emp.LastName = editEmployee.LastName;
+            emp.Initials = editEmployee.Initials;
+            emp.OfficeId = editEmployee.OfficeId;
+
+            ctx.SaveChanges();
+            return ctx.Employees.ToList();
         }
-        
+
 
         // DELETE: api/Employee/5
-        public void Delete(int id)
+        public List<Employee> Delete(int id)
         {
             Employee deleteEmployee = ctx.Employees.FirstOrDefault(x => x.Id == id);
             ctx.Employees.Remove(deleteEmployee);
             ctx.SaveChanges();
+            return ctx.Employees.ToList();
         }
     }
 
