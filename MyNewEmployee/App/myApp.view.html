@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="textinput">Last Name:</label>
                                 <div class="col-md-5">
-                                    <input id="lastNameId" ng-model="employeesToEdit.LastName"  name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="lastNameId" ng-model="employeesToEdit.LastName" name="textinput" type="text" placeholder="" class="form-control input-md">
 
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="textinput">Initials:</label>
                                 <div class="col-md-5">
-                                    <input id="initialsId" ng-model="employeesToEdit.Initials"  name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input id="initialsId" ng-model="employeesToEdit.Initials" name="textinput" type="text" placeholder="" class="form-control input-md">
 
                                 </div>
                             </div>
@@ -72,13 +72,14 @@
                 <h4 class="modal-title">Employees</h4>
             </div>
             <div style="padding:15px 0px 50px 0px">
-                <span class="col-md-1" style="font-weight:bold; text-align:center" >Search</span>               
+                <span class="col-md-1" style="font-weight:bold; text-align:center">Search</span>
                 <span class="col-md-2" style="padding-left:0;padding-right:0">
-                    <input type="text" class="form-control"  ng-model="search" />
-                </span>              
-                
+                    <input type="text" class="form-control" ng-model="search" />
+                </span>
+
             </div>
             <div></div>
+
             <div class="table-responsive">
                 <table class="table table-hover table-bordered" id="target">
                     <thead>
@@ -91,6 +92,7 @@
                             <th></th>
                         </tr>
                     </thead>
+                   
                     <tbody>
                         <tr ng-repeat="employee in employees | filter: search">
                             <td>{{employee.Id}}</td>
@@ -102,6 +104,8 @@
                         </tr>
                     </tbody> <!-- Seleccionar el edit por el row id ...-->
                 </table>
+                <!-- added spinner-->
+                <span class="spinposition" us-spinner="{radius:20, width:5, length: 11}" spinner-key="spinner-1" spinner-start-active="true"></span>
             </div>
         </div>
     </form>

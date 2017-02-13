@@ -7,49 +7,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="Scripts/angular.js"></script>
+    <!--added angular spinner reference-->
+    <script src="Scripts/spin.js"></script>
+    <script src="Scripts/angular-spinner.js"></script>
     <script src="App/myApp.controller.js"></script>
     <link rel="shortcut icon" href="">
-    <style>
-        a {
-            text-decoration: underline;
-        }
-
-        .modal-body {
-            padding: 10px 2px 0 2px;
-        }
-
-        .modal-title {
-            color: #0E617D;
-            font-weight: bold;
-        }
-
-        #tableheader {
-            background-color: #F1F6FA;
-        }
-
-        .modal-header {
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-
-        div.modal-content {
-            border-radius: 4px;
-            box-shadow: 0;
-        }
-
-        option[value="0"] {
-            opacity: 0.5;
-        }
-
-        .form-horizontal {
-            padding: 10px;
-        }
-
-        .modal-content {
-            box-shadow: none;
-        }
-    </style>
+    <link href="app.css" rel="stylesheet" />
 </head>
 <body ng-app="myApp">
   <div ng-include="'App/myApp.view.html'"></div>

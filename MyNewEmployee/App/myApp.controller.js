@@ -1,10 +1,19 @@
-﻿var myAppModule = angular.module('myApp', []);
+﻿var myAppModule = angular.module('myApp', ['angularSpinner']);
 
-myAppModule.controller('myController', function ($scope, employee, $http) {
+myAppModule.controller('myController',['$scope', 'usSpinnerService', 'employee', '$http', function ($scope, usSpinnerService, employee, $http) {
+    //added the usSpinnerService to the controller 
+    usSpinnerService.spin('spinner-1');
     employee.getEmployees().then(function (request) {
-        $scope.employees = request.data;
-
+    $scope.employees = request.data;
+    usSpinnerService.stop('spinner-1');
     });
+
+
+ /*   $scope.showLoader = true;
+    $http.get('http://www.testurl.com/index.php/site/getprofileLocations').success(function (data) {
+        $scope.showLoader = false;
+        // rest of your code
+    });*/
 
     $scope.editText = function () {
         $scope.titleText = "New Employee";
@@ -24,7 +33,7 @@ myAppModule.controller('myController', function ($scope, employee, $http) {
         employee.deleteEmployee(id).then(function (response) {
             console.log('deleted');
             $scope.employees = response.data;
-        })
+        });
         
     }
 
@@ -44,7 +53,6 @@ myAppModule.controller('myController', function ($scope, employee, $http) {
                         });
             }
         
-       // location.reload();
         angular.element('#myModal').modal('hide');
     }
 
@@ -54,7 +62,9 @@ myAppModule.controller('myController', function ($scope, employee, $http) {
                     console.log('deleted');
                 })
     }*/
-});
+}]);
+
+
 
 // que es dependency injection
 myAppModule.service('employee', function ($http) {
