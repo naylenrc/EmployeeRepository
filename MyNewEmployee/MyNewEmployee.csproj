@@ -124,6 +124,7 @@
     <Content Include="app.css" />
     <Content Include="App\myApp.controller.js" />
     <Content Include="App\myApp.view.html" />
+    <Content Include="App\service.js" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
@@ -166,7 +167,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
